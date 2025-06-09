@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIASEC Questionnaire</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #f8f9fa, #e3f2fd);
+    }
+    .question-block {
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .score-summary {
+      font-weight: bold;
+    }
+    .result-box {
+      background-color: #ffffff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .btn-primary {
+      background-color: #1976d2;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #0d47a1;
+    }
+    ul.rating-scale {
+      padding-left: 1rem;
+    }
+    ul.rating-scale li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+<div class="container py-5">
+  <h2 class="text-center mb-4">RIASEC Personality Test</h2>
+  <p class="text-muted text-center">Please rate each statement using the following scale:</p>
+  <ul class="rating-scale">
+    <li>1 - Strongly Disagree</li>
+    <li>2 - Disagree</li>
+    <li>3 - Neutral</li>
+    <li>4 - Agree</li>
+    <li>5 - Strongly Agree</li>
+  </ul>
+
+  <form id="riasecForm">
+    <div class="mb-2">
+      <div class="col-md-5">
+        <label for="userName" class="form-label">Name</label>
+        <input type="text" class="form-control" id="userName" name="userName" placeholder="Enter your name" required>
+      </div>
+    </div>
+    <div class="mb-3">
+      <div class="col-md-5">
+        <label for="userId" class="form-label">ID</label>
+        <input type="text" class="form-control" id="userId" name="userId" placeholder="Enter your ID" required>
+      </div>
+    </div>
+
+    <div id="questions"></div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </div>
+  </form>
+
+  <div id="results" class="result-box mt-5" style="display: none;">
+    <h4 class="mb-3">Your RIASEC Scores:</h4>
+    <div id="scoreSummary"></div>
+    <h5 class="mt-4">Top Interest Code: <span id="interestCode"></span></h5>
+    <div id="detailedExplanation" class="mt-4"></div>
+    <div id="careerSuggestions" class="mt-3"></div>
+  </div>
+</div>
+
+<script>
+  const questions = [
+    // Realistic
+    { text: "I enjoy working with tools or machinery.", type: "R" },
+    { text: "I like building or fixing things.", type: "R" },
+    { text: "I enjoy working outdoors and being physically active.", type: "R" },
+    { text: "I enjoy using machines or physical labor in work.", type: "R" },
+    { text: "I like working with mechanical systems.", type: "R" },
+    // Investigative
+    { text: "I enjoy solving math problems.", type: "I" },
+    { text: "I enjoy conducting research or experiments.", type: "I" },
+    { text: "I enjoy solving logical or scientific problems.", type: "I" },
+    { text: "I enjoy interpreting data and information.", type: "I" },
+    { text: "I like formulating hypotheses and testing them.", type: "I" },
+    // Artistic
+    { text: "I enjoy expressing myself creatively (e.g., writing, art, music).", type: "A" },
+    { text: "I enjoy creating artwork, music, or writing.", type: "A" },
+    { text: "I enjoy inventing or designing new things.", type: "A" },
+    { text: "I enjoy expressing ideas in unconventional ways.", type: "A" },
+    { text: "I enjoy developing creative campaigns or media.", type: "A" },
+    // Social
+    { text: "I like helping people learn or grow.", type: "S" },
+    { text: "I enjoy working as part of a team to help others.", type: "S" },
+    { text: "I like helping others solve their personal issues.", type: "S" },
+    { text: "I like volunteering or offering emotional support.", type: "S" },
+    { text: "I like teaching or mentoring others.", type: "S" },
+    // Enterprising
+    { text: "I like leading groups and persuading others.", type: "E" },
+    { text: "I like managing projects or businesses.", type: "E" },
+    { text: "I like making decisions and taking risks in business.", type: "E" },
+    { text: "I enjoy taking charge and motivating others.", type: "E" },
+    { text: "I enjoy making presentations or closing deals.", type: "E" },
+    // Conventional
+    { text: "I like working with data or keeping records.", type: "C" },
+    { text: "I enjoy organizing files, charts, or schedules.", type: "C" },
+    { text: "I enjoy following clear rules and procedures.", type: "C" },
+    { text: "I enjoy tasks that require precision and structure.", type: "C" },
+    { text: "I enjoy completing paperwork or recordkeeping.", type: "C" }
+  ];
+
+  const typeNames = {
+    R: "Realistic",
+    I: "Investigative",
+    A: "Artistic",
+    S: "Social",
+    E: "Enterprising",
+    C: "Conventional"
+  };
+
+  const explanations = {
+    R: "Realistic individuals are doers. They prefer hands-on problems and solutions, and often enjoy working with machines, tools, or being outdoors.",
+    I: "Investigative types are thinkers. They enjoy problem-solving, working independently, and diving deep into research and data.",
+    A: "Artistic people are creators. They love self-expression, exploring ideas through art, writing, or performance.",
+    S: "Social individuals are helpers. They value relationships and enjoy working with, helping, or teaching others.",
+    E: "Enterprising types are persuaders. They enjoy leading, managing, and influencing others to achieve goals.",
+    C: "Conventional people are organizers. They thrive in structured environments, enjoy routines, and like working with data and details."
+  };
+
+  const careers = {
+    R: ["Engineer", "Mechanic", "Chef", "Electrician"],
+    I: ["Scientist", "Analyst", "Researcher", "Lab Technician"],
+    A: ["Artist", "Designer", "Musician", "Writer"],
+    S: ["Teacher", "Counselor", "Nurse", "Social Worker"],
+    E: ["Entrepreneur", "Salesperson", "Manager", "Executive"],
+    C: ["Accountant", "Administrator", "Banker", "Clerk"]
+  };
+
+  const form = document.getElementById("riasecForm");
+  const questionsDiv = document.getElementById("questions");
+  const scoreSummary = document.getElementById("scoreSummary");
+  const interestCode = document.getElementById("interestCode");
+  const detailedExplanation = document.getElementById("detailedExplanation");
+  const careerSuggestions = document.getElementById("careerSuggestions");
+
+  questions.forEach((q, i) => {
+    const qBlock = document.createElement("div");
+    qBlock.className = "question-block";
+    qBlock.innerHTML = `
+      <p><strong>${i + 1}. ${q.text}</strong></p>
+      ${[1, 2, 3, 4, 5].map(val => `
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q${i}" value="${val}" required>
+          <label class="form-check-label">${val}</label>
+        </div>
+      `).join('')}
+    `;
+    questionsDiv.appendChild(qBlock);
+  });
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const scores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
+
+    questions.forEach((q, i) => {
+      const val = parseInt(document.querySelector(`input[name='q${i}']:checked`).value);
+      scores[q.type] += val;
+    });
+
+    const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    const code = sorted.slice(0, 3).map(i => i[0]).join("");
+
+    scoreSummary.innerHTML = Object.entries(scores)
+      .map(([k, v]) => `${typeNames[k]} (${k}): ${v}`)
+      .join("<br>");
+
+    interestCode.textContent = code;
+
+    detailedExplanation.innerHTML = `<strong>Detailed Explanation:</strong><br>` +
+      sorted.map(([k]) => `<p><strong>${typeNames[k]} (${k}):</strong> ${explanations[k]}</p>`).join("");
+
+    // Recommended career suggestions based on top 3 types
+    let recommendedCareers = [];
+    sorted.slice(0, 3).forEach(([k]) => {
+      recommendedCareers = recommendedCareers.concat(careers[k]);
+    });
+
+    recommendedCareers = [...new Set(recommendedCareers)];
+
+    careerSuggestions.innerHTML = `<br><strong> Careers You Can be really good in:</strong><ul>` +
+      recommendedCareers.map(career => `<li>${career}</li>`).join('') + `</ul>`;
+
+    document.getElementById("results").style.display = "block";
+  });
+</script>
+</body>
+</html>

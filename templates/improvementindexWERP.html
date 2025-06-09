@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<div class="container mt-5">
+    <form action="/riasecWERP" method="POST">
+<body class="bg-light">
+    <div class="row g-3">
+    <h2 class="mb-4 text-center">Your Submitted Academic Information for Present Year</h2>
+
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Mathematics Score:</strong> {{ math }}</li>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Science Score:</strong> {{ science }}</li>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Language Score:</strong> {{ language }}</li>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Social Science Score:</strong> {{ social_score }}</li>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Computer Science Score:</strong> {{ cs }}</li>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Physical Education Score:</strong> {{ pe }}</li>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Percentage:</strong> {{ percentage }}</li>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Logical Reasoning:</strong> {{ logic }}</li>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Verbal Reasoning:</strong> {{ verbal }}</li>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Creativity:</strong> {{ creativity }}</li>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Analytical Skills:</strong> {{ analytical }}</li>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Leadership Skills:</strong> {{ leadership }}</li>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Problem Solving Skills:</strong> {{ problem }}</li>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Decision Making Skills:</strong> {{ decision }}</li>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Social Skills:</strong> {{ social_skills }}</li>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Favorite Subjects:</strong> {{ subject }}</li>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Hobbies:</strong> {{ hobby }}</li>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Sports Participation:</strong> {{ sports }}</li>
+      </div>
+    </div>
+
+    
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Academic Information of past years<!--{{name,age,gender,email,phone,grade}}--></h2>
+  
+    
+
+
+        
+        <div class="row g-3 pb-3">
+
+             <div class="col-md-4">
+                <label class="form-label">Year One</label>
+                
+            </div>
+        </div>
+             <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Mathematics Score</label>
+                <input type="number" name="y_math_score" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Science Score</label>
+                <input type="number" name="y_science_score" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Language Score</label>
+                <input type="number" name="y_language_score" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Social Science Score</label>
+                <input type="number" name="y_social_score" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Computer Science Score</label>
+                <input type="number" name="y_cs_score" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Scores in Physical Education</label>
+                <input type="number" name="y_pe_score" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Percentage</label>
+                <input type="number" name="y_percentage" class="form-control" required>
+            </div>
+
+        </div>
+        <br>
+        <br>
+         <div class="row g-3 pb-3">
+
+             <div class="col-md-4">
+                <label class="form-label">Year Two</label>
+                
+            </div>
+        </div>
+             <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Mathematics Score</label>
+                <input type="number" name="z_math_score" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Science Score</label>
+                <input type="number" name="z_science_score" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Language Score</label>
+                <input type="number" name="z_language_score" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Social Science Score</label>
+                <input type="number" name="z_social_score" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Computer Science Score</label>
+                <input type="number" name="z_cs_score" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Scores in Physical Education</label>
+                <input type="number" name="z_pe_score" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Percentage</label>
+                <input type="number" name="z_percentage" class="form-control" required>
+            </div>
+            <div class="mt-4 text-center">
+            <button type="submit" class="btn btn-success">Next</button>
+        </div>
+        </div>
+    </form>
+    <br>
+    <br>
+    <br>
+</div>
+</body>
+</html>

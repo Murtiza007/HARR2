@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Stream Recommendation Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        .form-section {
+            margin-bottom: 30px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Student Stream Recommendation Input Form</h2>
+    <form action="/predict" method="post">
+
+        <div class="form-section">
+        <h2>Career Fit Scores (0-100)</h2>
+        <input type="number" name="Career Fit Score for Medical Science (0-100)" placeholder="Medical Science">
+        <input type="number" name="Career Fit Score for Non-Medical Science (0-100)" placeholder="Non-Medical Science">
+        <input type="number" name="Career Fit Score for Commerce (0-100)" placeholder="Commerce">
+        <input type="number" name="Career Fit Score for Arts (0-100)" placeholder="Arts">
+    </div>
+
+    <div class="form-section">
+        <h2>RIASEC</h2>
+        <input type="number" name="R" placeholder="R - Realistic">
+        <input type="number" name="I" placeholder="I - Investigative">
+        <input type="number" name="A" placeholder="A - Artistic">
+        <input type="number" name="S" placeholder="S - Social">
+        <input type="number" name="E" placeholder="E - Enterprising">
+        <input type="number" name="C" placeholder="C - Conventional">
+    </div>
+
+    <div class="form-section">
+        <h2>MBTI</h2>
+        <input type="number" name="E.1" placeholder="E.1">
+        <input type="number" name="I.1" placeholder="I.1">
+        <input type="number" name="S.1" placeholder="S.1">
+        <input type="number" name="N" placeholder="N">
+        <input type="number" name="T" placeholder="T">
+        <input type="number" name="F" placeholder="F">
+        <input type="number" name="J" placeholder="J">
+        <input type="number" name="P" placeholder="P">
+    </div>
+
+    <div class="form-section">
+        <h2>Gardner’s Multiple Intelligences</h2>
+        <input type="number" name="Natural" placeholder="Natural">
+        <input type="number" name="Linguistic" placeholder="Linguistic">
+        <input type="number" name="Logical" placeholder="Logical">
+        <input type="number" name="Bodily" placeholder="Bodily-Kinesthetic">
+        <input type="number" name="Intrapersonal" placeholder="Intrapersonal">
+        <input type="number" name="Interpersonal" placeholder="Interpersonal">
+        <input type="number" name="Spatial" placeholder="Spatial">
+        <input type="number" name="Musical" placeholder="Musical">
+    </div>
+
+    <div class="form-section">
+        <h2>Improvement Indexes</h2>
+        <input type="number" step="0.01" name="Mathematics Improvement Index " placeholder="Mathematics">
+        <input type="number" step="0.01" name="Science Improvement Index " placeholder="Science">
+        <input type="number" step="0.01" name="Language Improvement Index " placeholder="Language">
+        <input type="number" step="0.01" name="Social Science Improvement Index " placeholder="Social Science">
+        <input type="number" step="0.01" name="Computer Science Improvement Index " placeholder="Computer Science">
+        <input type="number" step="0.01" name="Percentage Improvement Index" placeholder="Overall Percentage">
+    </div>
+
+    <div class="form-section">
+        <h2>Detailed Career Fit</h2>
+        <input type="number" name="Career_fit_Medical" placeholder="Career Fit Medical">
+        <input type="number" name="Career_fit_Non_Medical" placeholder="Career Fit Non-Medical">
+        <input type="number" name="Career_fit_Arts" placeholder="Career Fit Arts">
+        <input type="number" name="Career_fit_Commerce" placeholder="Career Fit Commerce">
+    </div>
+
+    <div class="form-section">
+        <h2>Improvement Index By Stream</h2>
+        <input type="number" name="Improvement_index_Medical" placeholder="Improvement Index Medical">
+        <input type="number" name="Improvement_index_Non Medical" placeholder="Improvement Index Non-Medical">
+        <input type="number" name="Improvement_index_Arts" placeholder="Improvement Index Arts">
+        <input type="number" name="Improvement_index_Commerce" placeholder="Improvement Index Commerce">
+    </div>
+
+    <div class="form-section">
+        <h2>RIASEC by Stream</h2>
+        <input type="number" name="Riasec_med" placeholder="RIASEC Medical">
+        <input type="number" name="Riasec_non-med" placeholder="RIASEC Non-Medical">
+        <input type="number" name="Riasec_arts" placeholder="RIASEC Arts">
+        <input type="number" name="Riasec_commerce" placeholder="RIASEC Commerce">
+    </div>
+
+    <div class="form-section">
+        <h2>MBTI by Stream</h2>
+        <input type="number" name="MBTI_Medical" placeholder="MBTI Medical">
+        <input type="number" name="MBTI_Non-Medical" placeholder="MBTI Non-Medical">
+        <input type="number" name="MBTI_Commerce" placeholder="MBTI Commerce">
+        <input type="number" name="MBTI_Arts" placeholder="MBTI Arts">
+    </div>
+
+    <div class="form-section">
+        <h2>Gardner by Stream</h2>
+        <input type="number" name="Gardner_medical" placeholder="Gardner Medical">
+        <input type="number" name="Gardner_non-medical" placeholder="Gardner Non-Medical">
+        <input type="number" name="Gardner_arts" placeholder="Gardner Arts">
+        <input type="number" name="Gardner_commerce" placeholder="Gardner Commerce">
+    </div>
+
+    <div class="form-section">
+        <h2>Final Stream Scores</h2>
+        <input type="number" name="Medical Score" placeholder="Medical Score">
+        <input type="number" name="Non-Medical Score" placeholder="Non-Medical Score">
+        <input type="number" name="Arts_Score" placeholder="Arts Score">
+        <input type="number" name="Commerce Score" placeholder="Commerce Score">
+    </div>
+
+        <input type="submit" value="Submit">
+
+    </form>
+
+</body>
+</html>
+
+
+    {% if score%}
+    <div>
+        The score is {{score}}
+    </div>
+    {%endif%}
+
+
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gardner’s Multiple Intelligences Test</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background: #f0f8ff;
+    }
+    .question-block {
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .result-box {
+      background-color: #ffffff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .btn-primary {
+      background-color: #1976d2;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #0d47a1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <h2 class="text-center mb-4">Gardner’s Multiple Intelligences Questionnaire</h2>
+    <p class="text-muted text-center">Rate how true each statement is for you (1 = Strongly Disagree, 5 = Strongly Agree):</p>
+
+    <form id="miForm">
+      <div class="mb-2">
+      <div class="col-md-5">
+      <label for="userName" class="form-label">Name</label>
+      <input type="text" class="form-control" id="userName" name="userName" placeholder="Enter your name" required>
+    </div>
+</div>
+    <div class="mb-3">
+      <div class="col-md-5">
+      <label for="userId" class="form-label">ID</label>
+      <input type="text" class="form-control" id="userId" name="userId" placeholder="Enter your ID" required>
+    </div>
+    </div>
+      <div id="questions"></div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+      </div>
+    </form>
+
+    <div id="results" class="result-box mt-5" style="display:none;">
+      <h4 class="mb-3">Your Intelligence Scores:</h4>
+      <div id="scoreSummary"></div>
+      <h5 class="mt-4">Top Intelligence: <span id="topIntelligence" class="text-primary"></span></h5>
+      <div id="explanations" class="mt-4"></div>
+    </div>
+  </div>
+
+  <script>
+    const intelligences = {
+      Linguistic: [
+        "I enjoy writing stories, poems, or essays.",
+        "I love reading books and learning new words.",
+        "I remember information better when I write it down.",
+        "I like word games and crossword puzzles."
+      ],
+      Logical: [
+        "I enjoy solving puzzles and logic games.",
+        "Math and science are some of my favorite subjects.",
+        "I like finding patterns in things.",
+        "I easily understand how things work."
+      ],
+      Spatial: [
+        "I enjoy drawing or doodling.",
+        "I can easily read maps and charts.",
+        "I visualize solutions to problems.",
+        "I have a good sense of direction."
+      ],
+      Bodily: [
+        "I enjoy physical activities like sports or dancing.",
+        "I learn better by doing rather than reading or listening.",
+        "I like using my hands to build or create.",
+        "I gesture a lot when I talk."
+      ],
+      Musical: [
+        "I enjoy listening to music while studying or working.",
+        "I can remember tunes and rhythms easily.",
+        "I like singing or playing musical instruments.",
+        "I can pick up musical patterns quickly."
+      ],
+      Interpersonal: [
+        "I enjoy working in teams or groups.",
+        "I can sense how others are feeling.",
+        "I find it easy to make friends.",
+        "I like helping others solve problems."
+      ],
+      Intrapersonal: [
+        "I reflect a lot about my emotions and experiences.",
+        "I know my strengths and weaknesses.",
+        "I set goals for personal growth.",
+        "I enjoy spending time alone to think."
+      ],
+      Naturalistic: [
+        "I enjoy spending time in nature.",
+        "I care deeply about the environment.",
+        "I like identifying different plants or animals.",
+        "I’m interested in natural phenomena like weather or ecosystems."
+      ]
+    };
+
+    const explanations = {
+      Linguistic: "You are word-smart. You excel at reading, writing, storytelling, and learning languages.",
+      Logical: "You are number/reasoning smart. You enjoy problem-solving, logic, and critical thinking.",
+      Spatial: "You are picture-smart. You think in images and pictures, and understand visual relationships.",
+      Bodily: "You are body-smart. You express yourself through movement and enjoy hands-on activities.",
+      Musical: "You are music-smart. You understand rhythm, tone, and enjoy composing or performing music.",
+      Interpersonal: "You are people-smart. You easily understand others and thrive in social settings.",
+      Intrapersonal: "You are self-smart. You are in tune with your inner feelings and motivations.",
+      Naturalistic: "You are nature-smart. You are sensitive to the natural world and enjoy exploring it."
+    };
+
+    const questionsDiv = document.getElementById("questions");
+    const form = document.getElementById("miForm");
+
+    let questionIndex = 0;
+    const miTypes = Object.keys(intelligences);
+    const questionMap = [];
+
+    miTypes.forEach(type => {
+      intelligences[type].forEach(q => {
+        const qBlock = document.createElement("div");
+        qBlock.className = "question-block";
+        qBlock.innerHTML = `
+          <p><strong>${questionIndex + 1}. ${q}</strong> <em class="text-muted">(${type})</em></p>
+          ${[1,2,3,4,5].map(val => `
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="q${questionIndex}" value="${val}" required>
+              <label class="form-check-label">${val}</label>
+            </div>
+          `).join("")}
+        `;
+        questionsDiv.appendChild(qBlock);
+        questionMap.push(type);
+        questionIndex++;
+      });
+    });
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const scores = {};
+      miTypes.forEach(type => scores[type] = 0);
+
+      questionMap.forEach((type, i) => {
+        const val = parseInt(document.querySelector(`input[name="q${i}"]:checked`).value);
+        scores[type] += val;
+      });
+
+      let sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      let topType = sorted[0][0];
+
+      let summaryHtml = "";
+      for (const [type, score] of sorted) {
+        summaryHtml += `<p><strong>${type}:</strong> ${score} / 20</p>`;
+      }
+
+      const explanationsHtml = sorted.map(([type]) =>
+        `<p><strong>${type}:</strong> ${explanations[type]}</p>`
+      ).join("");
+
+      document.getElementById("scoreSummary").innerHTML = summaryHtml;
+      document.getElementById("topIntelligence").textContent = topType;
+      document.getElementById("explanations").innerHTML = explanationsHtml;
+      document.getElementById("results").style.display = "block";
+      window.scrollTo({ top: document.getElementById("results").offsetTop, behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>

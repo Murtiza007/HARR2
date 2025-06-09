@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MBTI Personality Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f2f7fc;
+    }
+    .question-block {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+<div class="container py-5">
+  <h2 class="text-center mb-4">MBTI Personality Test</h2>
+  <p class="text-center text-muted mb-4">Rate each statement from 1 (Strongly Disagree) to 5 (Strongly Agree)</p>
+  
+  <form id="mbtiForm">
+    <div class="mb-2">
+      <div class="col-md-5">
+      <label for="userName" class="form-label">Name</label>
+      <input type="text" class="form-control" id="userName" name="userName" placeholder="Enter your name" required>
+    </div>
+</div>
+    <div class="mb-3">
+      <div class="col-md-5">
+      <label for="userId" class="form-label">ID</label>
+      <input type="text" class="form-control" id="userId" name="userId" placeholder="Enter your ID" required>
+    </div>
+    </div>
+    <div id="questionContainer"></div>
+    <div class="text-center">
+      <button class="btn btn-primary mt-3" type="submit">Submit</button>
+    </div>
+  </form>
+
+  <div id="resultBox" class="mt-5 p-4 bg-white shadow rounded" style="display:none;">
+    <h4>Your MBTI Type: <span id="mbtiResult" class="text-primary"></span></h4>
+    <div id="mbtiDescription" class="mt-3"></div>
+    <div id="scoreBreakdown" class="mt-4">
+      <h5>Dimension Scores:</h5>
+      <ul id="scoreList" class="list-unstyled mb-0"></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  // E/I
+  { text: "I feel energized when I interact with a group of people.", dimension: "EI", type: "E" },
+  { text: "I enjoy being the center of attention.", dimension: "EI", type: "E" },
+  { text: "I speak before I think.", dimension: "EI", type: "E" },
+  { text: "I feel drained after socializing.", dimension: "EI", type: "I" },
+  { text: "I enjoy deep one-on-one conversations.", dimension: "EI", type: "I" },
+  { text: "I need time alone to recharge.", dimension: "EI", type: "I" },
+
+  // S/N
+  { text: "I trust facts over ideas.", dimension: "SN", type: "S" },
+  { text: "I like to focus on details.", dimension: "SN", type: "S" },
+  { text: "I enjoy practical tasks.", dimension: "SN", type: "S" },
+  { text: "I enjoy imagining future possibilities.", dimension: "SN", type: "N" },
+  { text: "I notice patterns and underlying meanings.", dimension: "SN", type: "N" },
+  { text: "I value creativity over practicality.", dimension: "SN", type: "N" },
+
+  // T/F
+  { text: "I make decisions using logic and reason.", dimension: "TF", type: "T" },
+  { text: "I prioritize fairness over compassion.", dimension: "TF", type: "T" },
+  { text: "I enjoy debating and discussing different views.", dimension: "TF", type: "T" },
+  { text: "I make decisions based on how others feel.", dimension: "TF", type: "F" },
+  { text: "I try to maintain harmony in my relationships.", dimension: "TF", type: "F" },
+  { text: "I often empathize with people’s emotions.", dimension: "TF", type: "F" },
+
+  // J/P
+  { text: "I prefer to plan everything in advance.", dimension: "JP", type: "J" },
+  { text: "I feel comfortable with routines and rules.", dimension: "JP", type: "J" },
+  { text: "I like knowing what's next.", dimension: "JP", type: "J" },
+  { text: "I’m spontaneous and flexible.", dimension: "JP", type: "P" },
+  { text: "I keep my options open until the last minute.", dimension: "JP", type: "P" },
+  { text: "I dislike being tied to a strict schedule.", dimension: "JP", type: "P" },
+];
+
+const descriptions = {
+  "ISTJ": "Responsible, serious, loyal, and traditional. Values order and structure.",
+  "ISFJ": "Quiet, friendly, responsible, and dedicated. Puts others first.",
+  "INFJ": "Idealistic, insightful, and principled. Motivated by personal values.",
+  "INTJ": "Strategic, logical, and independent. Loves challenges and ideas.",
+  "ISTP": "Practical and adaptable. Prefers to act rather than talk.",
+  "ISFP": "Gentle and sensitive. Enjoys beauty and seeks harmony.",
+  "INFP": "Idealistic, loyal to values. Curious and open-minded.",
+  "INTP": "Innovative and curious. Enjoys abstract ideas and solving problems.",
+  "ESTP": "Energetic and enthusiastic. Loves excitement and variety.",
+  "ESFP": "Spontaneous and fun-loving. Lives in the moment.",
+  "ENFP": "Enthusiastic and creative. Values inspiration and growth.",
+  "ENTP": "Inventive and confident. Enjoys debate and exploration.",
+  "ESTJ": "Organized and driven. Takes charge and gets things done.",
+  "ESFJ": "Warmhearted and conscientious. Values relationships and harmony.",
+  "ENFJ": "Charismatic and supportive. Inspires others and builds teams.",
+  "ENTJ": "Confident and strategic. Born leader and decision-maker."
+};
+
+const container = document.getElementById("questionContainer");
+questions.forEach((q, i) => {
+  const div = document.createElement("div");
+  div.className = "question-block";
+  div.innerHTML = `
+    <p><strong>${i + 1}. ${q.text}</strong></p>
+    ${[1, 2, 3, 4, 5].map(val => `
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="q${i}" value="${val}" required>
+        <label class="form-check-label">${val}</label>
+      </div>`).join("")}
+  `;
+  container.appendChild(div);
+});
+
+document.getElementById("mbtiForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
+  questions.forEach((q, i) => {
+    const val = parseInt(document.querySelector(`input[name='q${i}']:checked`).value);
+    scores[q.type] += val;
+  });
+
+  const result = 
+    (scores.E >= scores.I ? "E" : "I") +
+    (scores.S >= scores.N ? "S" : "N") +
+    (scores.T >= scores.F ? "T" : "F") +
+    (scores.J >= scores.P ? "J" : "P");
+
+  document.getElementById("mbtiResult").textContent = result;
+  document.getElementById("mbtiDescription").innerHTML = `<strong>Description:</strong> ${descriptions[result] || "No description available."}`;
+
+  document.getElementById("scoreList").innerHTML = `
+    <li><strong>E:</strong> ${scores.E} &nbsp;&nbsp;&nbsp; <strong>I:</strong> ${scores.I}</li>
+    <li><strong>S:</strong> ${scores.S} &nbsp;&nbsp;&nbsp; <strong>N:</strong> ${scores.N}</li>
+    <li><strong>T:</strong> ${scores.T} &nbsp;&nbsp;&nbsp; <strong>F:</strong> ${scores.F}</li>
+    <li><strong>J:</strong> ${scores.J} &nbsp;&nbsp;&nbsp; <strong>P:</strong> ${scores.P}</li>
+  `;
+
+  document.getElementById("resultBox").style.display = "block";
+
+  // ✅ Send scores + result to Google Sheet
+ // sendToGoogleSheet({ ...scores, mbti: result });
+});
+
+// 🔗 Google Sheets submission function
+function sendToGoogleSheet(data) {
+  const scriptURL = "https://script.google.com/macros/s/AKfycbziuMUmI_qlH4c_7oZxKDrAtVkN9tLsnqzZZnwwwUSAY1G9Km5LNU_12FrokMMw8izMDQ/exec"; // 🔁 Replace with your actual script URL
+  fetch(scriptURL, {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(() => {
+    console.log("Submitted to Google Sheet");
+  })
+  .catch((err) => {
+    console.error("Error sending data to Google Sheet", err);
+  });
+  
+}
+</script>
+
+<script>
+  const supabaseUrl = 'https://aygxdrgtzjoaygkxwjyw.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5Z3hkcmd0empvYXlna3h3anl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUyNjA0NTIsImV4cCI6MjA2MDgzNjQ1Mn0.KkRQFU9kYgY33_1GisNNGFMvWr8eZ5-QrMwiwzE4ArY';
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+  document.getElementById("riasecForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const userId = crypto.randomUUID(); // For tracking user session, change if needed
+    const formData = new FormData(e.target);
+    const entries = Array.from(formData.entries());
+
+    for (const [questionName, selectedValue] of entries) {
+      const questionId = parseInt(questionName.replace("q", ""));
+      const score = parseInt(selectedValue);
+
+      const { data, error } = await supabase.from('Responses').insert([
+        {
+          user_id: userId,
+          question_id: questionId,
+          score: score
+        }
+      ]);
+
+      if (error) {
+        console.error("Error inserting response:", error);
+        alert("There was an error submitting your response.");
+        return;
+      }
+    }
+
+    alert("Responses submitted successfully!");
+  });
+</script>
+<!-- Add this just before </body> -->
+
+<div class="container mt-5">
+  <h4 class="text-center mb-3">All MBTI Personality Types</h4>
+  <div id="detailedTypes" class="row g-3">
+    <div class="col-md-6">
+      <strong>ISTJ - The Inspector</strong><br>
+      Responsible, organized, and dependable. ISTJs follow rules, value traditions, and get things done efficiently.
+    </div>
+    <div class="col-md-6">
+      <strong>ISFJ - The Defender</strong><br>
+      Caring, reliable, and loyal. ISFJs are nurturers who put others’ needs before their own.
+    </div>
+    <div class="col-md-6">
+      <strong>INFJ - The Advocate</strong><br>
+      Insightful, idealistic, and compassionate. INFJs have a strong sense of purpose and vision for the future.
+    </div>
+    <div class="col-md-6">
+      <strong>INTJ - The Mastermind</strong><br>
+      Strategic, logical, and independent. INTJs love solving complex problems and planning long-term.
+    </div>
+    <div class="col-md-6">
+      <strong>ISTP - The Virtuoso</strong><br>
+      Bold, practical, and efficient. ISTPs are problem-solvers who thrive on hands-on activities.
+    </div>
+    <div class="col-md-6">
+      <strong>ISFP - The Artist</strong><br>
+      Gentle, creative, and peaceful. ISFPs appreciate beauty and live in the moment.
+    </div>
+    <div class="col-md-6">
+      <strong>INFP - The Mediator</strong><br>
+      Thoughtful, idealistic, and empathetic. INFPs are deeply guided by their personal values.
+    </div>
+    <div class="col-md-6">
+      <strong>INTP - The Thinker</strong><br>
+      Analytical, objective, and inventive. INTPs love exploring abstract theories and ideas.
+    </div>
+    <div class="col-md-6">
+      <strong>ESTP - The Dynamo</strong><br>
+      Energetic, action-oriented, and persuasive. ESTPs are natural risk-takers and thrive in fast-paced environments.
+    </div>
+    <div class="col-md-6">
+      <strong>ESFP - The Entertainer</strong><br>
+      Spontaneous, fun-loving, and sociable. ESFPs enjoy being the center of attention and making others laugh.
+    </div>
+    <div class="col-md-6">
+      <strong>ENFP - The Campaigner</strong><br>
+      Enthusiastic, imaginative, and outgoing. ENFPs value inspiration and meaningful relationships.
+    </div>
+    <div class="col-md-6">
+      <strong>ENTP - The Visionary</strong><br>
+      Innovative, curious, and outspoken. ENTPs love debate, challenges, and exploring new ideas.
+    </div>
+    <div class="col-md-6">
+      <strong>ESTJ - The Executive</strong><br>
+      Organized, realistic, and direct. ESTJs like structure, rules, and getting things done.
+    </div>
+    <div class="col-md-6">
+      <strong>ESFJ - The Caregiver</strong><br>
+      Friendly, loyal, and warm. ESFJs are social beings who thrive in helping and supporting others.
+    </div>
+    <div class="col-md-6">
+      <strong>ENFJ - The Protagonist</strong><br>
+      Charismatic, empathetic, and supportive. ENFJs are natural leaders who uplift others.
+    </div>
+    <div class="col-md-6">
+      <strong>ENTJ - The Commander</strong><br>
+      Confident, strategic, and assertive. ENTJs are born leaders with a strong drive for success.
+    </div>
+  </div>
+</div>
+<br>
+<br>
+</body>
+</html>
