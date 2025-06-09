@@ -4,16 +4,50 @@
     <meta charset="UTF-8">
     <title>Student Form</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #f8f9fa, #e3f2fd);
+        }
+        .question-block {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .score-summary {
+            font-weight: bold;
+        }
+        .result-box {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .btn-primary {
+            background-color: #1976d2;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0d47a1;
+        }
+        ul.rating-scale {
+            padding-left: 1rem;
+        }
+        ul.rating-scale li {
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 
 <body class="bg-light">
-    
 <div class="container mt-5">
-    <h2 class="mb-4 text-center">Academic Information<!--{{name,age,gender,email,phone,grade}}--></h2>
+    <h2 class="mb-4 text-center">Student Form</h2>
   
-    <form action="/improvementindexWERP" method="POST">
+    <form id="studentForm" action="/predict" method="POST">
+        <!-- Academic Information -->
         <div class="row g-3">
-            
+            <h2 class="mb-4 text-center">Academic Information</h2>
             <div class="col-md-4">
                 <label class="form-label">Mathematics Score</label>
                 <input type="number" name="math_score" class="form-control" required>
@@ -42,206 +76,709 @@
                 <label class="form-label">Percentage</label>
                 <input type="number" name="percentage" class="form-control" required>
             </div>
-
         </div>
-        <br>
-        <br>
-         <div class="row g-3">
-            <h2 class="mb-4 text-center">Non Academic Information
-            </h2>
-  
-    <div class="container pb-5">
-        <div class="row g-3">   
-            <div class="col-md-6 pb-3">
-                <label class="form-label">Rate your Logical Reasoning Ability</label>
-                <select name="logic" class="form-select" required>
-                    <option value="">Select 1–10</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                </select>
+
+        <!-- Non-Academic Information -->
+        <div class="row g-3 mt-5">
+            <h2 class="mb-4 text-center">Non-Academic Information</h2>
+            <div class="container pb-5">
+                <div class="row g-3">   
+                    <div class="col-md-6 pb-3">
+                        <label class="form-label">Rate your Logical Reasoning Ability</label>
+                        <select name="logic" class="form-select" required>
+                            <option value="">Select 1–10</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <label class="form-label">Rate your Verbal Reasoning Ability</label>
+                        <select name="verbal" class="form-select" required>
+                            <option value="">Select 1–10</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <label class="form-label">Rate your Creativity Ability</label>
+                        <select name="creative" class="form-select" required>
+                            <option value="">Select 1–10</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <label class="form-label">Rate your Analytical Ability</label>
+                        <select name="analytical" class="form-select" required>
+                            <option value="">Select 1–10</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <label class="form-label">Rate your Leadership Ability</label>
+                        <select name="leadership" class="form-select" required>
+                            <option value="">Select 1–10</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <label class="form-label">Rate your Problem Solving Ability</label>
+                        <select name="problem" class="form-select" required>
+                            <option value="">Select</option>
+                            <option>Medium</option>
+                            <option>Low</option>
+                            <option>High</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <label class="form-label">Rate your Decision Making Ability</label>
+                        <select name="decision" class="form-select" required>
+                            <option value="">Select</option>
+                            <option>Excellent</option>
+                            <option>Poor</option>
+                            <option>Moderate</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <label class="form-label">Rate your Social Skills</label>
+                        <select name="social" class="form-select" required>
+                            <option value="">Select</option>
+                            <option>Introvert</option>
+                            <option>Extrovert</option>
+                            <option>Ambivert</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <label class="form-label">Subject of Interest</label>
+                        <select name="subject" class="form-select" required>
+                            <option value="">Select Subject</option>
+                            <option>Mathematics</option>
+                            <option>Science</option>
+                            <option>Linguistic</option>
+                            <option>Social Science</option>
+                            <option>Computer Sciences</option>
+                            <option>Religion</option>
+                            <option>Physics</option>
+                            <option>Chemistry</option>
+                            <option>Biology</option>
+                            <option>Geography</option>
+                            <option>History</option>
+                            <option>Politics</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <label class="form-label">Hobby</label>
+                        <select name="hobby" class="form-select" required>
+                            <option value="">Select Hobby</option>
+                            <option value="reading">Reading</option>
+                            <option value="writing">Writing</option>
+                            <option value="drawing">Drawing / Painting</option>
+                            <option value="dancing">Dancing</option>
+                            <option value="singing">Singing</option>
+                            <option value="music">Playing Musical Instruments</option>
+                            <option value="sports">Playing Sports</option>
+                            <option value="coding">Coding / Programming</option>
+                            <option value="gaming">Video Gaming</option>
+                            <option value="photography">Photography</option>
+                            <option value="crafts">Crafts / DIY Projects</option>
+                            <option value="gardening">Gardening</option>
+                            <option value="acting">Acting / Drama</option>
+                            <option value="travel">Traveling</option>
+                            <option value="blogging">Blogging / Vlogging</option>
+                            <option value="volunteering">Volunteering</option>
+                            <option value="public_speaking">Public Speaking / Debating</option>
+                            <option value="baking">Cooking / Baking</option>
+                            <option value="chess">Playing Chess</option>
+                            <option value="robotics">Robotics / STEM Clubs</option>
+                            <option value="language_learning">Learning New Languages</option>
+                            <option value="puzzles">Solving Puzzles / Brain Games</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <label class="form-label">Sports Participation</label>
+                        <select name="sports" class="form-select" required>
+                            <option value="">Select</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <div class="col-md-6 pb-3">
-            <label class="form-label">Rate your Verbal Reasoning Ability</label>
-            <select name="verbal" class="form-select" required>
-                <option value="">Select 1–10</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-            </select>
+        <!-- Academic Information of Past Years -->
+        <div class="container mt-5">
+            <h2 class="mb-4 text-center">Academic Information of Past Years</h2>
+            <div class="row g-3 pb-3">
+                <div class="col-md-4">
+                    <label class="form-label">Year One</label>
+                </div>
             </div>
-
-             <div class="col-md-6 pb-3  ">
-            <label class="form-label">Rate your Creativity Ability</label>
-            <select name="creative" class="form-select" required>
-                <option value="">Select 1–10</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-            </select>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Mathematics Score</label>
+                    <input type="number" name="y_math_score" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Science Score</label>
+                    <input type="number" name="y_science_score" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Language Score</label>
+                    <input type="number" name="y_language_score" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Social Science Score</label>
+                    <input type="number" name="y_social_score" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Computer Science Score</label>
+                    <input type="number" name="y_cs_score" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Scores in Physical Education</label>
+                    <input type="number" name="y_pe_score" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Percentage</label>
+                    <input type="number" name="y_percentage" class="form-control" required>
+                </div>
+            </div>
+            <br><br>
+            <div class="row g-3 pb-3">
+                <div class="col-md-4">
+                    <label class="form-label">Year Two</label>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Mathematics Score</label>
+                    <input type="number" name="z_math_score" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Science Score</label>
+                    <input type="number" name="z_science_score" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Language Score</label>
+                    <input type="number" name="z_language_score" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Social Science Score</label>
+                    <input type="number" name="z_social_score" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Computer Science Score</label>
+                    <input type="number" name="z_cs_score" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Scores in Physical Education</label>
+                    <input type="number" name="z_pe_score" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Percentage</label>
+                    <input type="number" name="z_percentage" class="form-control" required>
+                </div>
+            </div>
         </div>
 
-            <div class="col-md-6 pb-3 ">
-            <label class="form-label">Rate your Analytical Ability</label>
-            <select name="analytical" class="form-select" required>
-                <option value="">Select 1–10</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-            </select>
-        </div>
-        
-         
-        <div class="col-md-6 pb-3 ">
-            <label class="form-label">Rate your Leadership Ability</label>
-            <select name="leadership" class="form-select" required>
-                <option value="">Select 1–10</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-            </select>
-        </div>
-        <div class="col-md-6 pb-3 ">
-            <label class="form-label">Rate your Problem Solving Ability</label>
-            <select name="problem" class="form-select" required>
-                <option value="">Select </option>
-                <option>Medium</option>
-                <option>Low</option>
-                <option>High</option>
-            
-                
-            </select>
+        <!-- RIASEC Personality Test -->
+        <div class="container py-5">
+            <h2 class="text-center mb-4">RIASEC Personality Test</h2>
+            <p class="text-muted text-center">Please rate each statement using the following scale:</p>
+            <ul class="rating-scale">
+                <li>1 - Strongly Disagree</li>
+                <li>2 - Disagree</li>
+                <li>3 - Neutral</li>
+                <li>4 - Agree</li>
+                <li>5 - Strongly Agree</li>
+            </ul>
+            <div id="riasecQuestions"></div>
+            <div id="riasecResults" class="result-box mt-5" style="display: none;">
+                <h4 class="mb-3">Your RIASEC Scores:</h4>
+                <div id="riasecScoreSummary"></div>
+                <h5 class="mt-4">Top Interest Code: <span id="riasecInterestCode"></span></h5>
+                <div id="riasecDetailedExplanation" class="mt-4"></div>
+            </div>
+            <!-- Hidden fields for RIASEC scores -->
+            <input type="hidden" name="riasec_r" id="riasec_r">
+            <input type="hidden" name="riasec_i" id="riasec_i">
+            <input type="hidden" name="riasec_a" id="riasec_a">
+            <input type="hidden" name="riasec_s" id="riasec_s">
+            <input type="hidden" name="riasec_e" id="riasec_e">
+            <input type="hidden" name="riasec_c" id="riasec_c">
+            <input type="hidden" name="riasec_code" id="riasec_code">
         </div>
 
-         <div class="col-md-6 pb-3 ">
-            <label class="form-label">Rate your Decision Making Ability</label>
-            <select name="decision" class="form-select" required>
-                <option value="">Select </option>
-                <option>Excellent</option>
-                <option>Poor</option>
-                <option>Moderate</option>
-                
-            </select>
+        <!-- Gardner’s Multiple Intelligences Questionnaire -->
+        <div class="container py-5">
+            <h2 class="text-center mb-4">Gardner’s Multiple Intelligences Questionnaire</h2>
+            <p class="text-muted text-center">Rate how true each statement is for you (1 = Strongly Disagree, 5 = Strongly Agree):</p>
+            <div class="mb-2">
+                <div class="col-md-5">
+                    <label for="userName" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="userName" name="user_name" placeholder="Enter your name" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="col-md-5">
+                    <label for="userId" class="form-label">ID</label>
+                    <input type="text" class="form-control" id="userId" name="user_id" placeholder="Enter your ID" required>
+                </div>
+            </div>
+            <div id="miQuestions"></div>
+            <div id="miResults" class="result-box mt-5" style="display:none;">
+                <h4 class="mb-3">Your Intelligence Scores:</h4>
+                <div id="miScoreSummary"></div>
+                <h5 class="mt-4">Top Intelligence: <span id="miTopIntelligence" class="text-primary"></span></h5>
+                <div id="miExplanations" class="mt-4"></div>
+            </div>
+            <!-- Hidden fields for Gardner scores -->
+            <input type="hidden" name="mi_linguistic" id="mi_linguistic">
+            <input type="hidden" name="mi_logical" id="mi_logical">
+            <input type="hidden" name="mi_spatial" id="mi_spatial">
+            <input type="hidden" name="mi_bodily" id="mi_bodily">
+            <input type="hidden" name="mi_musical" id="mi_musical">
+            <input type="hidden" name="mi_interpersonal" id="mi_interpersonal">
+            <input type="hidden" name="mi_intrapersonal" id="mi_intrapersonal">
+            <input type="hidden" name="mi_naturalistic" id="mi_naturalistic">
+            <input type="hidden" name="mi_top" id="mi_top">
         </div>
 
-         <div class="col-md-6 pb-3 ">
-            <label class="form-label">Rate your Socail Skills</label>
-            <select name="social" class="form-select" required>
-                <option value="">Select</option>
-                <option>Introvert</option>
-                <option>Extrovert</option>
-                <option>Ambivert</option>
-                
-            </select>
+        <!-- MBTI Personality Test -->
+        <div class="container py-5">
+            <h2 class="text-center mb-4">MBTI Personality Test</h2>
+            <p class="text-center text-muted mb-4">Rate each statement from 1 (Strongly Disagree) to 5 (Strongly Agree)</p>
+            <div id="mbtiQuestions"></div>
+            <div id="mbtiResultBox" class="mt-5 p-4 bg-white shadow rounded" style="display:none;">
+                <h4>Your MBTI Type: <span id="mbtiResult" class="text-primary"></span></h4>
+                <div id="mbtiDescription" class="mt-3"></div>
+                <div id="mbtiScoreBreakdown" class="mt-4">
+                    <h5>Dimension Scores:</h5>
+                    <ul id="mbtiScoreList" class="list-unstyled mb-0"></ul>
+                </div>
+            </div>
+            <!-- Hidden fields for MBTI scores -->
+            <input type="hidden" name="mbti_e" id="mbti_e">
+            <input type="hidden" name="mbti_i" id="mbti_i">
+            <input type="hidden" name="mbti_s" id="mbti_s">
+            <input type="hidden" name="mbti_n" id="mbti_n">
+            <input type="hidden" name="mbti_t" id="mbti_t">
+            <input type="hidden" name="mbti_f" id="mbti_f">
+            <input type="hidden" name="mbti_j" id="mbti_j">
+            <input type="hidden" name="mbti_p" id="mbti_p">
+            <input type="hidden" name="mbti_type" id="mbti_type">
         </div>
-        
-      
-  </div>
-</div>
 
-           
-           <div class="col-md-6 pb-3 ">
-            <label class="form-label">Subject of Intrest</label>
-            <select name="subject" class="form-select" required>
-                <option value="">Select Subject</option>
-                <option>Mathematics</option>
-                <option>Science</option>
-                <option>Linguistic</option>
-                <option>Social Science</option>
-                <option>Computer Sciences</option>
-                <option>Religion</option>
-                <option>Physics</option>
-                <option>Chemistry</option>
-                <option>Biology</option>
-                <option>Geography</option>
-                <option>History</option>
-                <option>Politics</option>
-               
-            </select>
-        </div>
-            
-        <div class="col-md-6 pb-3 ">
-        <label class="form-label">Hobby</label>
-        <select name="hobby" class="form-select" required>
-        <option value="select">Reading</option>
-        <option value="reading">Reading</option>
-        <option value="writing">Writing</option>
-        <option value="drawing">Drawing / Painting</option>
-        <option value="dancing">Dancing</option>
-        <option value="singing">Singing</option>
-        <option value="music">Playing Musical Instruments</option>
-        <option value="sports">Playing Sports</option>
-        <option value="coding">Coding / Programming</option>
-        <option value="gaming">Video Gaming</option>
-        <option value="photography">Photography</option>
-        <option value="crafts">Crafts / DIY Projects</option>
-        <option value="gardening">Gardening</option>
-        <option value="acting">Acting / Drama</option>
-        <option value="travel">Traveling</option>
-        <option value="blogging">Blogging / Vlogging</option>
-        <option value="volunteering">Volunteering</option>
-        <option value="public_speaking">Public Speaking / Debating</option>
-        <option value="baking">Cooking / Baking</option>
-        <option value="chess">Playing Chess</option>
-        <option value="robotics">Robotics / STEM Clubs</option>
-        <option value="language_learning">Learning New Languages</option>
-        <option value="puzzles">Solving Puzzles / Brain Games</option>
-            </select>
-        </div>
-           <div class="col-md-6 pb-3 ">
-            <label class="form-label">Sports Paticipation</label>
-            <select name="sports" class="form-select" required>
-                <option value="">Select</option>
-                <option>Yes</option>
-                <option>No</option>
-                
-            </select>
-        </div>
-           
-        </div>
+        <!-- Submit Button -->
         <div class="mt-4 text-center">
             <button type="submit" class="btn btn-success">Submit</button>
         </div>
+        <div id="formFeedback" class="mt-3 text-center" style="display: none;"></div>
+        <br><br><br>
     </form>
-    <br>
-    <br>
-    <br>
 </div>
+
+<script>
+// RIASEC Personality Test
+const riasecQuestions = [
+    // Realistic
+    { text: "I enjoy working with tools or machinery.", type: "R" },
+    { text: "I like building or fixing things.", type: "R" },
+    { text: "I enjoy working outdoors and being physically active.", type: "R" },
+    { text: "I enjoy using machines or physical labor in work.", type: "R" },
+    { text: "I like working with mechanical systems.", type: "R" },
+    // Investigative
+    { text: "I enjoy solving math problems.", type: "I" },
+    { text: "I enjoy conducting research or experiments.", type: "I" },
+    { text: "I enjoy solving logical or scientific problems.", type: "I" },
+    { text: "I enjoy interpreting data and information.", type: "I" },
+    { text: "I like formulating hypotheses and testing them.", type: "I" },
+    // Artistic
+    { text: "I enjoy expressing myself creatively (e.g., writing, art, music).", type: "A" },
+    { text: "I enjoy creating artwork, music, or writing.", type: "A" },
+    { text: "I enjoy inventing or designing new things.", type: "A" },
+    { text: "I enjoy expressing ideas in unconventional ways.", type: "A" },
+    { text: "I enjoy developing creative campaigns or media.", type: "A" },
+    // Social
+    { text: "I like helping people learn or grow.", type: "S" },
+    { text: "I enjoy working as part of a team to help others.", type: "S" },
+    { text: "I like helping others solve their personal issues.", type: "S" },
+    { text: "I like volunteering or offering emotional support.", type: "S" },
+    { text: "I like teaching or mentoring others.", type: "S" },
+    // Enterprising
+    { text: "I like leading groups and persuading others.", type: "E" },
+    { text: "I like managing projects or businesses.", type: "E" },
+    { text: "I like making decisions and taking risks in business.", type: "E" },
+    { text: "I enjoy taking charge and motivating others.", type: "E" },
+    { text: "I enjoy making presentations or closing deals.", type: "E" },
+    // Conventional
+    { text: "I like working with data or keeping records.", type: "C" },
+    { text: "I enjoy organizing files, charts, or schedules.", type: "C" },
+    { text: "I enjoy following clear rules and procedures.", type: "C" },
+    { text: "I enjoy tasks that require precision and structure.", type: "C" },
+    { text: "I enjoy completing paperwork or recordkeeping.", type: "C" }
+];
+
+const typeNames = {
+    R: "Realistic",
+    I: "Investigative",
+    A: "Artistic",
+    S: "Social",
+    E: "Enterprising",
+    C: "Conventional"
+};
+
+const explanations = {
+    R: "Realistic individuals are doers. They prefer hands-on problems and solutions, and often enjoy working with machines, tools, or being outdoors.",
+    I: "Investigative types are thinkers. They enjoy problem-solving, working independently, and diving deep into research and data.",
+    A: "Artistic people are creators. They love self-expression, exploring ideas through art, writing, or performance.",
+    S: "Social individuals are helpers. They value relationships and enjoy working with, helping, or teaching others.",
+    E: "Enterprising types are persuaders. They enjoy leading, managing, and influencing others to achieve goals.",
+    C: "Conventional people are organizers. They thrive in structured environments, enjoy routines, and like working with data and details."
+};
+
+const riasecQuestionsDiv = document.getElementById("riasecQuestions");
+const riasecScoreSummary = document.getElementById("riasecScoreSummary");
+const riasecInterestCode = document.getElementById("riasecInterestCode");
+const riasecDetailedExplanation = document.getElementById("riasecDetailedExplanation");
+
+riasecQuestions.forEach((q, i) => {
+    const qBlock = document.createElement("div");
+    qBlock.className = "question-block";
+    qBlock.innerHTML = `
+        <p><strong>${i + 1}. ${q.text}</strong></p>
+        ${[1, 2, 3, 4, 5].map(val => `
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="riasec_q${i}" value="${val}" required>
+                <label class="form-check-label">${val}</label>
+            </div>
+        `).join('')}
+    `;
+    riasecQuestionsDiv.appendChild(qBlock);
+});
+
+function calculateRiasecScores() {
+    const scores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
+    riasecQuestions.forEach((q, i) => {
+        const selected = document.querySelector(`input[name='riasec_q${i}']:checked`);
+        if (selected) {
+            const val = parseInt(selected.value);
+            scores[q.type] += val;
+        }
+    });
+
+    let sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    let code = sorted.slice(0, 3).map(i => i[0]).join("");
+
+    // Populate hidden fields
+    document.getElementById("riasec_r").value = scores.R;
+    document.getElementById("riasec_i").value = scores.I;
+    document.getElementById("riasec_a").value = scores.A;
+    document.getElementById("riasec_s").value = scores.S;
+    document.getElementById("riasec_e").value = scores.E;
+    document.getElementById("riasec_c").value = scores.C;
+    document.getElementById("riasec_code").value = code;
+
+    // Display results
+    riasecScoreSummary.innerHTML = Object.entries(scores).map(([k, v]) => `${typeNames[k]} (${k}): ${v}`).join("<br>");
+    riasecInterestCode.textContent = code;
+    riasecDetailedExplanation.innerHTML = `<strong>Detailed Explanation:</strong><br>` +
+        sorted.map(([k]) => `<p><strong>${typeNames[k]} (${k}):</strong> ${explanations[k]}</p>`).join("");
+    document.getElementById("riasecResults").style.display = "block";
+}
+
+// Gardner’s Multiple Intelligences
+const intelligences = {
+    Linguistic: [
+        "I enjoy writing stories, poems, or essays.",
+        "I love reading books and learning new words.",
+        "I remember information better when I write it down.",
+        "I like word games and crossword puzzles."
+    ],
+    Logical: [
+        "I enjoy solving puzzles and logic games.",
+        "Math and science are some of my favorite subjects.",
+        "I like finding patterns in things.",
+        "I easily understand how things work."
+    ],
+    Spatial: [
+        "I enjoy drawing or doodling.",
+        "I can easily read maps and charts.",
+        "I visualize solutions to problems.",
+        "I have a good sense of direction."
+    ],
+    Bodily: [
+        "I enjoy physical activities like sports or dancing.",
+        "I learn better by doing rather than reading or listening.",
+        "I like using my hands to build or create.",
+        "I gesture a lot when I talk."
+    ],
+    Musical: [
+        "I enjoy listening to music while studying or working.",
+        "I can remember tunes and rhythms easily.",
+        "I like singing or playing musical instruments.",
+        "I can pick up musical patterns quickly."
+    ],
+    Interpersonal: [
+        "I enjoy working in teams or groups.",
+        "I can sense how others are feeling.",
+        "I find it easy to make friends.",
+        "I like helping others solve problems."
+    ],
+    Intrapersonal: [
+        "I reflect a lot about my emotions and experiences.",
+        "I know my strengths and weaknesses.",
+        "I set goals for personal growth.",
+        "I enjoy spending time alone to think."
+    ],
+    Naturalistic: [
+        "I enjoy spending time in nature.",
+        "I care deeply about the environment.",
+        "I like identifying different plants or animals.",
+        "I’m interested in natural phenomena like weather or ecosystems."
+    ]
+};
+
+const miExplanations = {
+    Linguistic: "You are word-smart. You excel at reading, writing, storytelling, and learning languages.",
+    Logical: "You are number/reasoning smart. You enjoy problem-solving, logic, and critical thinking.",
+    Spatial: "You are picture-smart. You think in images and pictures, and understand visual relationships.",
+    Bodily: "You are body-smart. You express yourself through movement and enjoy hands-on activities.",
+    Musical: "You are music-smart. You understand rhythm, tone, and enjoy composing or performing music.",
+    Interpersonal: "You are people-smart. You easily understand others and thrive in social settings.",
+    Intrapersonal: "You are self-smart. You are in tune with your inner feelings and motivations.",
+    Naturalistic: "You are nature-smart. You are sensitive to the natural world and enjoy exploring it."
+};
+
+const miQuestionsDiv = document.getElementById("miQuestions");
+let miQuestionIndex = 0;
+const miTypes = Object.keys(intelligences);
+const miQuestionMap = [];
+
+miTypes.forEach(type => {
+    intelligences[type].forEach(q => {
+        const qBlock = document.createElement("div");
+        qBlock.className = "question-block";
+        qBlock.innerHTML = `
+            <p><strong>${miQuestionIndex + 1}. ${q}</strong> <em class="text-muted">(${type})</em></p>
+            ${[1,2,3,4,5].map(val => `
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="mi_q${miQuestionIndex}" value="${val}" required>
+                    <label class="form-check-label">${val}</label>
+                </div>
+            `).join("")}
+        `;
+        miQuestionsDiv.appendChild(qBlock);
+        miQuestionMap.push(type);
+        miQuestionIndex++;
+    });
+});
+
+function calculateMiScores() {
+    const scores = {};
+    miTypes.forEach(type => scores[type] = 0);
+
+    miQuestionMap.forEach((type, i) => {
+        const selected = document.querySelector(`input[name='mi_q${i}']:checked`);
+        if (selected) {
+            const val = parseInt(selected.value);
+            scores[type] += val;
+        }
+    });
+
+    let sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    let topType = sorted[0][0];
+
+    // Populate hidden fields
+    document.getElementById("mi_linguistic").value = scores.Linguistic;
+    document.getElementById("mi_logical").value = scores.Logical;
+    document.getElementById("mi_spatial").value = scores.Spatial;
+    document.getElementById("mi_bodily").value = scores.Bodily;
+    document.getElementById("mi_musical").value = scores.Musical;
+    document.getElementById("mi_interpersonal").value = scores.Interpersonal;
+    document.getElementById("mi_intrapersonal").value = scores.Intrapersonal;
+    document.getElementById("mi_naturalistic").value = scores.Naturalistic;
+    document.getElementById("mi_top").value = topType;
+
+    // Display results
+    let summaryHtml = "";
+    for (const [type, score] of sorted) {
+        summaryHtml += `<p><strong>${type}:</strong> ${score} / 20</p>`;
+    }
+    const explanationsHtml = sorted.map(([type]) =>
+        `<p><strong>${type}:</strong> ${miExplanations[type]}</p>`
+    ).join("");
+    document.getElementById("miScoreSummary").innerHTML = summaryHtml;
+    document.getElementById("miTopIntelligence").textContent = topType;
+    document.getElementById("miExplanations").innerHTML = explanationsHtml;
+    document.getElementById("miResults").style.display = "block";
+}
+
+// MBTI Personality Test
+const mbtiQuestions = [
+    // E/I
+    { text: "I feel energized when I interact with a group of people.", dimension: "EI", type: "E" },
+    { text: "I enjoy being the center of attention.", dimension: "EI", type: "E" },
+    { text: "I speak before I think.", dimension: "EI", type: "E" },
+    { text: "I feel drained after socializing.", dimension: "EI", type: "I" },
+    { text: "I enjoy deep one-on-one conversations.", dimension: "EI", type: "I" },
+    { text: "I need time alone to recharge.", dimension: "EI", type: "I" },
+    // S/N
+    { text: "I trust facts over ideas.", dimension: "SN", type: "S" },
+    { text: "I like to focus on details.", dimension: "SN", type: "S" },
+    { text: "I enjoy practical tasks.", dimension: "SN", type: "S" },
+    { text: "I enjoy imagining future possibilities.", dimension: "SN", type: "N" },
+    { text: "I notice patterns and underlying meanings.", dimension: "SN", type: "N" },
+    { text: "I value creativity over practicality.", dimension: "SN", type: "N" },
+    // T/F
+    { text: "I make decisions using logic and reason.", dimension: "TF", type: "T" },
+    { text: "I prioritize fairness over compassion.", dimension: "TF", type: "T" },
+    { text: "I enjoy debating and discussing different views.", dimension: "TF", type: "T" },
+    { text: "I make decisions based on how others feel.", dimension: "TF", type: "F" },
+    { text: "I try to maintain harmony in my relationships.", dimension: "TF", type: "F" },
+    { text: "I often empathize with people’s emotions.", dimension: "TF", type: "F" },
+    // J/P
+    { text: "I prefer to plan everything in advance.", dimension: "JP", type: "J" },
+    { text: "I feel comfortable with routines and rules.", dimension: "JP", type: "J" },
+    { text: "I like knowing what's next.", dimension: "JP", type: "J" },
+    { text: "I’m spontaneous and flexible.", dimension: "JP", type: "P" },
+    { text: "I keep my options open until the last minute.", dimension: "JP", type: "P" },
+    { text: "I dislike being tied to a strict schedule.", dimension: "JP", type: "P" },
+];
+
+const mbtiDescriptions = {
+    "ISTJ": "Responsible, serious, loyal, and traditional. Values order and structure.",
+    "ISFJ": "Quiet, friendly, responsible, and dedicated. Puts others first.",
+    "INFJ": "Idealistic, insightful, and principled. Motivated by personal values.",
+    "INTJ": "Strategic, logical, and independent. Loves challenges and ideas.",
+    "ISTP": "Practical and adaptable. Prefers to act rather than talk.",
+    "ISFP": "Gentle and sensitive. Enjoys beauty and seeks harmony.",
+    "INFP": "Idealistic, loyal to values. Curious and open-minded.",
+    "INTP": "Innovative and curious. Enjoys abstract ideas and solving problems.",
+    "ESTP": "Energetic and enthusiastic. Loves excitement and variety.",
+    "ESFP": "Spontaneous and fun-loving. Lives in the moment.",
+    "ENFP": "Enthusiastic and creative. Values inspiration and growth.",
+    "ENTP": "Inventive and confident. Enjoys debate and exploration.",
+    "ESTJ": "Organized and driven. Takes charge and gets things done.",
+    "ESFJ": "Warmhearted and conscientious. Values relationships and harmony.",
+    "ENFJ": "Charismatic and supportive. Inspires others and builds teams.",
+    "ENTJ": "Confident and strategic. Born leader and decision-maker."
+};
+
+const mbtiContainer = document.getElementById("mbtiQuestions");
+mbtiQuestions.forEach((q, i) => {
+    const div = document.createElement("div");
+    div.className = "question-block";
+    div.innerHTML = `
+        <p><strong>${i + 1}. ${q.text}</strong></p>
+        ${[1, 2, 3, 4, 5].map(val => `
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="mbti_q${i}" value="${val}" required>
+                <label class="form-check-label">${val}</label>
+            </div>`).join("")}
+    `;
+    mbtiContainer.appendChild(div);
+});
+
+function calculateMbtiScores() {
+    const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+    mbtiQuestions.forEach((q, i) => {
+        const selected = document.querySelector(`input[name='mbti_q${i}']:checked`);
+        if (selected) {
+            const val = parseInt(selected.value);
+            scores[q.type] += val;
+        }
+    });
+
+    const result = 
+        (scores.E >= scores.I ? "E" : "I") +
+        (scores.S >= scores.N ? "S" : "N") +
+        (scores.T >= scores.F ? "T" : "F") +
+        (scores.J >= scores.P ? "J" : "P");
+
+    // Populate hidden fields
+    document.getElementById("mbti_e").value = scores.E;
+    document.getElementById("mbti_i").value = scores.I;
+    document.getElementById("mbti_s").value = scores.S;
+    document.getElementById("mbti_n").value = scores.N;
+    document.getElementById("mbti_t").value = scores.T;
+    document.getElementById("mbti_f").value = scores.F;
+    document.getElementById("mbti_j").value = scores.J;
+    document.getElementById("mbti_p").value = scores.P;
+    document.getElementById("mbti_type").value = result;
+
+    // Display results
+    document.getElementById("mbtiResult").textContent = result;
+    document.getElementById("mbtiDescription").innerHTML = `<strong>Description:</strong> ${mbtiDescriptions[result] || "No description available."}`;
+    document.getElementById("mbtiScoreList").innerHTML = `
+        <li><strong>E:</strong> ${scores.E} &nbsp;&nbsp;&nbsp;&nbsp; <strong>I:</strong> ${scores.I}</li>
+        <li><strong>S:</strong> ${scores.S} &nbsp;&nbsp;&nbsp;&nbsp; <strong>N:</strong> ${scores.N}</li>
+        <li><strong>T:</strong> ${scores.T} &nbsp;&nbsp;&nbsp;&nbsp; <strong>F:</strong> ${scores.F}</li>
+        <li><strong>J:</strong> ${scores.J} &nbsp;&nbsp;&nbsp;&nbsp; <strong>P:</strong> ${scores.P}</li>
+    `;
+    document.getElementById("mbtiResultBox").style.display = "block";
+}
+
+// Form Submission Handler
+document.getElementById("studentForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    // Calculate scores for all tests
+    calculateRiasecScores();
+    calculateMiScores();
+    calculateMbtiScores();
+
+    // Show feedback
+    const feedback = document.getElementById("formFeedback");
+    feedback.style.display = "block";
+    feedback.innerHTML = '<p class="text-success">Form submitted successfully! Processing...</p>';
+
+    // Submit the form to Flask
+    this.submit();
+});
+</script>
 </body>
 </html>

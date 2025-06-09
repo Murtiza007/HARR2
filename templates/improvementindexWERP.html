@@ -5,11 +5,76 @@
     <title>Student Form</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<div class="container mt-5">
-    <form action="/riasecWERP" method="POST">
 <body class="bg-light">
-    <div class="row g-3">
-    <h2 class="mb-4 text-center">Your Submitted Academic Information for Present Year</h2>
+    
+<div class="container mt-5">
+    <h2 class="mb-4 text-center"> Thank you for completing the holistic assessment.</h2>
+    <p>
+  Based on the comprehensive analysis of your academic performance, logical and verbal reasoning abilities, creativity, and other personality indicators, we’ve computed weighted scores for four primary academic streams: Medical Science, Non-Medical Science, Commerce, and Arts.
+</p>
+
+<p>
+  Each stream score was calculated using a standardized formula that prioritizes subject-specific strengths and essential soft skills required in that field. These weights reflect the real-world demands and skillsets typically associated with each stream.
+</p>
+
+<p>
+  After processing your responses and scores, we are pleased to recommend the following streams as the best fit for your profile:
+</p>
+
+<ul>
+  <li><strong>1. {{ best_stream }}</strong> – This stream is most aligned with your overall profile, showcasing strong potential in both subject matter relevance and personal aptitude.</li>
+  <li><strong>2. {{ second_best_stream }}</strong> – This stream also shows a high compatibility with your strengths and can serve as an excellent alternative or dual focus area.</li>
+</ul>
+
+<p>
+  These recommendations are tailored to help you make well-informed academic decisions based on both your capabilities and interests. We encourage you to explore career options within these streams further and continue to build on your strengths for future academic and professional success.
+</p>
+
+
+
+    
+<div class="container mt-4">
+  <div class="row g-3">
+     <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Score for Medical Stream:</strong> {{ med_score }}</li>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Score for Non Medical Stream:</strong> {{ non_med_score }}</li>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Score for Commerce Stream:</strong> {{ commerce_score }}</li>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Score for Arts Stream:</strong> {{ arts_score }}</li>
+      </div>
+    </div>
+
+
+    <div class="col-md-6">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Best Recommendation:</strong> {{ best_stream }}</li>
+      </div>
+    </div>
+    <div class="col-md-6 pb-8">
+      <div class="list-group">
+        <li class="list-group-item"><strong>Second Best Recommendation:</strong> {{ second_best_stream }}</li>
+      </div>
+    </div>
+    
+    </div>
+</div>
+    
+<div class="container mt-4 pt-5">
+  <div class="row g-3">
+    <h2 class="mb-4 text-center">Your Submitted Information</h2>
 
     <div class="col-md-6">
       <div class="list-group">
@@ -49,7 +114,6 @@
         <li class="list-group-item"><strong>Percentage:</strong> {{ percentage }}</li>
       </div>
     </div>
-
     <div class="col-md-6">
       <div class="list-group">
         <li class="list-group-item"><strong>Logical Reasoning:</strong> {{ logic }}</li>
@@ -112,97 +176,14 @@
     </div>
 
     
-<div class="container mt-5">
-    <h2 class="mb-4 text-center">Academic Information of past years<!--{{name,age,gender,email,phone,grade}}--></h2>
-  
-    
 
 
-        
-        <div class="row g-3 pb-3">
+  </div>
+</div>
 
-             <div class="col-md-4">
-                <label class="form-label">Year One</label>
-                
-            </div>
-        </div>
-             <div class="row g-3">
-            <div class="col-md-4">
-                <label class="form-label">Mathematics Score</label>
-                <input type="number" name="y_math_score" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Science Score</label>
-                <input type="number" name="y_science_score" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Language Score</label>
-                <input type="number" name="y_language_score" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Social Science Score</label>
-                <input type="number" name="y_social_score" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Computer Science Score</label>
-                <input type="number" name="y_cs_score" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Scores in Physical Education</label>
-                <input type="number" name="y_pe_score" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Percentage</label>
-                <input type="number" name="y_percentage" class="form-control" required>
-            </div>
+<br>
+<br>
 
-        </div>
-        <br>
-        <br>
-         <div class="row g-3 pb-3">
-
-             <div class="col-md-4">
-                <label class="form-label">Year Two</label>
-                
-            </div>
-        </div>
-             <div class="row g-3">
-            <div class="col-md-4">
-                <label class="form-label">Mathematics Score</label>
-                <input type="number" name="z_math_score" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Science Score</label>
-                <input type="number" name="z_science_score" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Language Score</label>
-                <input type="number" name="z_language_score" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Social Science Score</label>
-                <input type="number" name="z_social_score" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Computer Science Score</label>
-                <input type="number" name="z_cs_score" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Scores in Physical Education</label>
-                <input type="number" name="z_pe_score" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Percentage</label>
-                <input type="number" name="z_percentage" class="form-control" required>
-            </div>
-            <div class="mt-4 text-center">
-            <button type="submit" class="btn btn-success">Next</button>
-        </div>
-        </div>
-    </form>
-    <br>
-    <br>
-    <br>
 </div>
 </body>
 </html>
